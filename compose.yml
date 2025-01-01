@@ -3,5 +3,7 @@ services:
     image: valkey/valkey:alpine
     volumes:
       - ./data/valkey:/data
+    ports:
+      - 6379:6379
     environment:
       VALKEY_EXTRA_FLAGS: "--save 60 1 --loglevel warning"
