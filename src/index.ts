@@ -12,7 +12,7 @@ async function main() {
 
     const browser = await puppeteer.setup({
         executablePath: env.BROWSER_PATH,
-        headless: false,
+        headless: env.BROWSER_HEADLESS,
     });
 
     const storage = createStorage({
