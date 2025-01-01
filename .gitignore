@@ -1,0 +1,9 @@
+*.log
+*.tsbuildinfo
+npm-debug.log*
+
+node_modules/
+tmp/
+
+.npm
+.env
