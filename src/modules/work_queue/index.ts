@@ -1,6 +1,8 @@
 import { QueueEvents, Queue, Worker } from "bullmq";
 
-import type { ProcessorConfig } from "./processor";
+export type { AccountInformation, BanInformation } from "./processor";
+
+import type { ProcessorConfig, AccountInformation } from "./processor";
 import { JobProcessor } from "./processor";
 import { env } from "@src/env";
 
@@ -17,7 +19,7 @@ export function createEvents() {
 }
 
 export function createQueue() {
-    return new Queue(QUEUE_NAME, {
+    return new Queue<AccountInformation>(QUEUE_NAME, {
         connection,
         defaultJobOptions: {
             removeOnComplete: true,
