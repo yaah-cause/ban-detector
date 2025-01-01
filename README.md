@@ -18,8 +18,9 @@ The project is currently in it's early stages
 ## Getting Started
 
 To run this application, you will need
-[https://nodejs.org](Node.js)
-as well as a Chromium-based browser.
+[Node.js](https://nodejs.org)
+as well as a
+[Chromium-based browser](https://en.wikipedia.org/wiki/Chromium_%28web_browser%29%0A#Browsers_based_on_Chromium).
 
 Once you have installed these two, clone the repository somewhere:
 
