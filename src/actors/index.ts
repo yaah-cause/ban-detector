@@ -13,8 +13,10 @@ export async function isBanned(browser: Browser, username: string) {
             { timeout: 10_000 },
             "Sorry, this page isn't available.",
         );
+        await page.close();
         return true;
     } catch {
+        await page.close();
         return false;
     }
 }
