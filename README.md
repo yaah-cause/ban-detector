@@ -28,11 +28,7 @@ Once you have installed these two, clone the repository somewhere:
 git clone https://github.com/yaah-cause/ban-detector
 ```
 
-Then, create an `.env` file inside of the cloned directory with the following content, replacing `...` with the absolute path to the desired Chromium browser:
-
-``` dotenv
-BROWSER_PATH=...
-```
+Then, copy `example.env` into `.env` and make any necessary changes to it
 
 Finally, you can install the dependencies and start the application (running these commands from within the directory)
 
