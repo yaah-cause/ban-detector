@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { createQueue, createWorker } from "@src/modules/work_queue";
 import { createStorage } from "@src/modules/storage";
-import { sleep } from "@src/utils";
+import { createServer } from "@src/server";
 import { env } from "@src/env";
 
 main().catch(console.error);
@@ -22,25 +22,41 @@ async function main() {
         }),
     });
 
+    const queue = createQueue();
+
     for (let i = 1; i <= env.NUM_WORKERS; i++) {
         console.log(`creating worker #${i}`);
         createWorker({ storage, browser });
     }
 
-    const queue = createQueue();
+    const server = createServer({ browser, storage, queue });
+    server.listen({ port: 3000 }, async (err, address) => {
+        if (err) {
+            await browser.close();
+            process.exit(1);
+        }
 
-    const usernames = [
-        "ashlee_raining",
-        "you.are.a.hitman",
-        "grouphub_",
-        "cilp1_0",
-        "xvideo_gifs33",
-    ];
-    for (const username of usernames) {
-        console.log(`adding ${username} to queue`);
-        await queue.add(username, { username });
+        console.log("server started on:", address);
+    });
+
+    signals(async () => {
+        console.log("closing server");
+        await server.close();
+
+        console.log("closing browser");
+        await browser.close();
+    });
+}
+
+function signals(func: (signal: NodeJS.Signals) => any) {
+    const signals: NodeJS.Signals[] = ["SIGINT", "SIGTERM"];
+
+    for (const signal of signals) {
+        process.on(signal, async () => {
+            console.log("received signal:", signal);
+            await func(signal);
+
+            process.exit(0); // Exit gracefully
+        });
     }
-
-    await sleep(30_000);
-    await browser.close();
 }
